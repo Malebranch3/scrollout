@@ -23,8 +23,19 @@ for(var thing in window.sConfig){
 		el.fromTop = xrect.top + window.scrollY;
 		el.fromBottom = xrect.bottom + window.scrollY;
 		switch(el.mode){
+			case 'hitpoint':
+					el.ogFunc = function(){
+						console.log("listening! "+(el.fromTop + el.padding.enter));
+						if(window.pageYOffset >= (el.fromTop + el.padding.enter)){
+							el.cb_action();
+						}else{
+							el.cb_reverse_action();
+						}
+					}
+					el.eListener = function(){window.sConfig.dontBogMeBro(el.ogFunc,el.scrollDelay)};
+					window.addEventListener('scroll', el.eListener);
+				break;
 			case 'enter':
-					
 					el.ogFunc = function(){
 						console.log("listening! "+(el.fromTop + el.padding.enter));
 						if(window.pageYOffset >= (el.fromTop + el.padding.enter - window.innerHeight)){
